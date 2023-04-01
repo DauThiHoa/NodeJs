@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import connectDB from './config/connectDB';
 // su dung => user?id =1 => bodyParser lay id = 7
 
 import viewEngine from "./config/viewEngine";
@@ -13,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended : true}))
 
 viewEngine(app);
 initWebRoutes(app);
+
+connectDB();
 
 let port = process.env.PORT || 6969;
 // PORT == UNDEFINED => PORT = 6969

@@ -1,6 +1,18 @@
+// lay tat ca cac model
+import db from '../models/index';
 
-let getHomePage = (req, res) => {
-    return res.render ('homepage.ejs');
+let getHomePage = async (req, res) => {
+
+    try {
+        let data = await db.User.findAll();  
+        return res.render ('homepage.ejs',{
+            data: JSON.stringify(data)
+        });
+
+    } catch (error) {
+        console.log(error)
+    }
+     
 }
 // Object : {
 //     key :'',

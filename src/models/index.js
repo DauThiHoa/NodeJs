@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config(); // SU DUNG  process.env
 
 const fs = require('fs');
 const path = require('path');
