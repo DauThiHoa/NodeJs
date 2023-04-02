@@ -15,6 +15,18 @@ let initWebRoutes = (app) => {
     // LAY DU LIEU TU DATABASE
     router.post('/post-crud', homeController.postCRUD);
 
+    // LAY DU LIEU TU DATABASE
+    router.get('/get-crud', homeController.displayGetCRUD);
+
+    // SUA DU LIEU CUA DOI TUONG
+    router.get('/edit-crud', homeController.getEditCRUD);
+
+    // SUA DU LIEU CUA DOI TUONG
+    router.post('/put-crud', homeController.putCRUD);
+
+    // SUA DU LIEU CUA DOI TUONG
+    router.get('/delete-crud', homeController.deleteCRUD);
+
 // rest api
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
