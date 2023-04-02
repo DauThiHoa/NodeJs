@@ -9,6 +9,12 @@ let initWebRoutes = (app) => {
      // vd => chuyen trang about
      router.get('/about', homeController.getAboutPage);
 
+     // LAY DU LIEU TU DATABASE
+     router.get('/crud', homeController.getCRUD);
+
+    // LAY DU LIEU TU DATABASE
+    router.post('/post-crud', homeController.postCRUD);
+
 // rest api
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');

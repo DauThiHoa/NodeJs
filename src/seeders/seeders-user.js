@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = { 
+module.exports = {  
   up: async (queryInterface, Sequelize) => {
   //  THEM DU LIEU
   // TRUYEN NHIEU DU LIEU CUNG 1 LUC 
@@ -11,9 +11,12 @@ module.exports = {
     firstName: 'Admin',
     lastName: '123',
     address: 'USA',
-    gender: 1,
-    typeRole: 'ROLE',
-    keyRole: 'R1',
+    phonenumber: '123456789', 
+    gender: true, 
+    image: '', 
+    roleId: 'R1',  
+    positionId: '', 
+
     createdAt: new Date(),
     updatedAt: new Date()
   }])
