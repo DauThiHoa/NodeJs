@@ -1,6 +1,8 @@
 // CHAY FILE DAU TIEN CUA DU AN 
 import express from "express";
 import homeController from "../controllers/homeController";
+import userController from "../controllers/userController";
+
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -26,6 +28,9 @@ let initWebRoutes = (app) => {
 
     // SUA DU LIEU CUA DOI TUONG
     router.get('/delete-crud', homeController.deleteCRUD);
+
+    // SUA DU LIEU CUA DOI TUONG
+    router.post('/api/login', userController.handleLogin);
 
 // rest api
 router.get('/hoidanit', (req, res) => {
