@@ -2,12 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import connectDB from './config/connectDB';
 // su dung => user?id =1 => bodyParser lay id = 7
+import cors from 'cors';
 
 import viewEngine from "./config/viewEngine";
 import initWebRoutes from "./route/web";
 require('dotenv').config();
 
 let app = express();
+app.use(cors({origin : true}));
+
 // config app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : true}))
