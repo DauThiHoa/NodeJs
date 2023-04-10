@@ -16,8 +16,8 @@ let handleUserLogin = ( email, password) => {
                     // LAY 3 TRUONG => CHU KHONG PHAI LAY HET THUOC TINH CUA DOI TUONG
                     attributes :  ['email', 'roleId','password'], 
                     where: {email: email},
-                    raw: true
-                });
+                    raw: true,
+                })
                 if ( user ){
                     // compare password
                     let check = await bcrypt.compareSync( password, user.password);
