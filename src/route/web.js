@@ -32,6 +32,9 @@ let initWebRoutes = (app) => {
     // SUA DU LIEU CUA DOI TUONG
     router.post('/api/login', userController.handleLogin);
 
+    //Tao API LAY TAT CA DU LIEU
+    router.get('/api/get-all-users',userController.handleGetAllUsers);
+    
 // rest api
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
