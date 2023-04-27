@@ -38,7 +38,10 @@ let initWebRoutes = (app) => {
     router.post('/api/create-new-user', userController.handleCreateNewUser);
     router.put('/api/edit-user', userController.handleEditUser);
     router.delete('/api/delete-user', userController.handleDeleteUser);//restAPI
+
+    router.get('/allcode',userController.getAllCode);
 // rest api
+
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
 })
