@@ -29,7 +29,7 @@ let handleUserLogin = (email, password) => {
                 // user already exist 
                 let user = await db.User.findOne({
                     // LAY 3 TRUONG => CHU KHONG PHAI LAY HET THUOC TINH CUA DOI TUONG
-                    attributes: ['email', 'roleId', 'password'],
+                    attributes: ['email', 'roleId', 'password', 'firstName' ,'lastName'],
                     where: { email: email },
                     raw: true,
                 })
@@ -218,16 +218,16 @@ let updateUserData = (data) => {
             reject(e);
         }
     })
-}
+} 
 let getAllCodeService = (typeInput) => {
     return new Promise(async (resolve, reject) => {
-        try {
+        try {  
             if (!typeInput) {
                 resolve({
                     errCode: 1,
                     errMessage:'Missing required parameters'    
-                })
-                } else {
+                })  
+            } else {
                 let res = {};
                 let allcode = await db.Allcode.findAll({
                     where: { type: typeInput }
