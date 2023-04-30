@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // 1 BAC SI CO THEM CO NHIEU PHONG KHAM
 
+      User.belongsTo (models.Allcode, {foreignKey: 'positionId', targetKey: 'keyMap', as: 'positionData'})
+      User.belongsTo (models.Allcode, {foreignKey: 'gender', targetKey: 'keyMap', as: 'genderData'})
     }
   };
   User.init({ 

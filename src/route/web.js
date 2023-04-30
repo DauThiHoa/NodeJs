@@ -2,6 +2,7 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import doctorController from "../controllers/doctorController";
 
 let router = express.Router();
 
@@ -40,6 +41,9 @@ let initWebRoutes = (app) => {
     router.delete('/api/delete-user', userController.handleDeleteUser);//restAPI
 
     router.get('/api/allcode',userController.getAllCode);
+
+    // LINK LAY RA CAC BAC SI HANG DAU ( TRANG CHU )
+    router.get('/api/top-doctor-home',doctorController.getTopDoctorHome);
 // rest api
 
 router.get('/hoidanit', (req, res) => {
