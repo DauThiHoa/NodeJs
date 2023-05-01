@@ -46,6 +46,10 @@ let initWebRoutes = (app) => {
     router.get('/api/top-doctor-home',doctorController.getTopDoctorHome);
 // rest api
 
+    router.get('/api/get-all-doctors',doctorController.getAllDoctors);
+    // LUU THONG TIN BAC SI TU FROM SELECT 
+    router.post('/api/save-infor-doctors',doctorController.postInforDoctor);
+
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
 })

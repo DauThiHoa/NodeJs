@@ -16,6 +16,40 @@ let getTopDoctorHome = async (req , res) => {
     }
 }
 
+let getAllDoctors = async (req , res) => {
+
+    try {
+        // TAO HAM LAY TAT CA CAC BAC SI TRONG DATABASE
+        let doctors = await doctorSevice.getAllDoctors (); 
+        return res.status(200).json (doctors) 
+
+    } catch (e) {
+        console.log (e)
+        return res.status(200).json ({
+            errCode: -1,
+            errMessage: 'Error from the server'
+        })
+    }
+}
+
+let postInforDoctor = async (req , res) => {
+    try {
+        // TAO HAM THEM THONG TIN BAC SI
+        let response = await doctorSevice.saveDetailInforDoctor (req.body);
+        return res.status(200).json (response) 
+
+    } catch (e) {
+        console.log (e)
+        return res.status(200).json ({
+            errCode: -1,
+            errMessage: 'Error from the server'
+        })
+    }
+}
+
+
 module.exports = {
-    getTopDoctorHome : getTopDoctorHome
+    getTopDoctorHome : getTopDoctorHome,
+    getAllDoctors: getAllDoctors,
+    postInforDoctor : postInforDoctor,
 }

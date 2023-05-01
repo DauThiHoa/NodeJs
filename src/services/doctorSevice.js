@@ -34,6 +34,64 @@ let getTopDoctorHome = ( limitInput ) => {
         }
     })
 }
+
+let getAllDoctors = () => {
+    //  DUNG PROMISE => 100% SE TRA VE DU LIEU
+    return new Promise (async (resolve, reject) => {
+        try {
+            //  LAY TAT CA CAC BAC SI TRONG DATABASE
+            let doctors = await db.User.findAll ({
+                // Dieu kien laf chuc danh => R2 ( Bac Si )
+                where : {roleId: 'R2'},
+                attributes: {
+                    exclude: ['password', 'image']
+                },
+            })
+            // resolve == return
+            resolve ({
+                errCode: 0,
+                data: doctors
+            })
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let saveDetailInforDoctor = (inputData) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            // 3 TRUONG CAN THIET CHO LUU TRU DATABASE => NEN KO THE THIEU
+            if (!inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown){
+                resolve ({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+            }else {
+                     // NGUOC LAI => SAVE=> DOCTOR 
+              await db.Markdown.create ({
+                    contentHTML: inputData.contentHTML,
+                    contentMarkdown: inputData.contentMarkdown,
+                    description: inputData.description,
+                    doctorId: inputData.doctorId
+                })
+            // => Neu luu thanh cong se gui ve thong bao
+                resolve ({
+                    errCode: 0,
+                    errMessage: 'Save infor doctor succeed!'
+                })
+            }
+           
+            
+        } catch (e) {
+            reject(e);
+        }
+
+    })
+}
 module.exports = {
-    getTopDoctorHome: getTopDoctorHome
+    getTopDoctorHome: getTopDoctorHome,
+    getAllDoctors : getAllDoctors,
+    saveDetailInforDoctor : saveDetailInforDoctor,
 }
