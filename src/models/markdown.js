@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // 1 BAC SI CO THEM CO NHIEU PHONG KHAM
 
+      // Mot user co 1 mo ta thong tin chi tiet ( key cua Markdown )
+      Markdown.belongsTo (models.User, {foreignKey: 'doctorId' })
     }
   };
   Markdown.init({ 

@@ -10,45 +10,39 @@ let initWebRoutes = (app) => {
     // TAO UNG DUNG DAU TIEN 
     router.get('/', homeController.getHomePage);
      // vd => chuyen trang about
-     router.get('/about', homeController.getAboutPage);
-
+     router.get('/about', homeController.getAboutPage); 
      // LAY DU LIEU TU DATABASE
-     router.get('/crud', homeController.getCRUD);
-
+     router.get('/crud', homeController.getCRUD); 
     // LAY DU LIEU TU DATABASE
-    router.post('/post-crud', homeController.postCRUD);
-
+    router.post('/post-crud', homeController.postCRUD); 
     // LAY DU LIEU TU DATABASE
-    router.get('/get-crud', homeController.displayGetCRUD);
-
+    router.get('/get-crud', homeController.displayGetCRUD); 
     // SUA DU LIEU CUA DOI TUONG
-    router.get('/edit-crud', homeController.getEditCRUD);
-
+    router.get('/edit-crud', homeController.getEditCRUD); 
     // SUA DU LIEU CUA DOI TUONG
-    router.post('/put-crud', homeController.putCRUD);
-
+    router.post('/put-crud', homeController.putCRUD); 
     // SUA DU LIEU CUA DOI TUONG
     router.get('/delete-crud', homeController.deleteCRUD);
 
+
     // SUA DU LIEU CUA DOI TUONG
-    router.post('/api/login', userController.handleLogin);
-
+    router.post('/api/login', userController.handleLogin); 
     //Tao API LAY TAT CA DU LIEU
-    router.get('/api/get-all-users',userController.handleGetAllUsers);
-
+    router.get('/api/get-all-users',userController.handleGetAllUsers); 
     router.post('/api/create-new-user', userController.handleCreateNewUser);
     router.put('/api/edit-user', userController.handleEditUser);
-    router.delete('/api/delete-user', userController.handleDeleteUser);//restAPI
-
+    router.delete('/api/delete-user', userController.handleDeleteUser);//restAPI 
     router.get('/api/allcode',userController.getAllCode);
 
-    // LINK LAY RA CAC BAC SI HANG DAU ( TRANG CHU )
-    router.get('/api/top-doctor-home',doctorController.getTopDoctorHome);
-// rest api
 
+    // LINK LAY RA CAC BAC SI HANG DAU ( TRANG CHU )
+    router.get('/api/top-doctor-home',doctorController.getTopDoctorHome);  
     router.get('/api/get-all-doctors',doctorController.getAllDoctors);
     // LUU THONG TIN BAC SI TU FROM SELECT 
     router.post('/api/save-infor-doctors',doctorController.postInforDoctor);
+    // LAY THONG TIN BAC SI THEO MA ID 
+    router.get('/api/get-detail-doctor-by-id',doctorController.getDetailDoctorById);
+ 
 
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');

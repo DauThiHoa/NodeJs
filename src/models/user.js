@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       // 1 BAC SI CO THEM CO NHIEU PHONG KHAM
 
       User.belongsTo (models.Allcode, {foreignKey: 'positionId', targetKey: 'keyMap', as: 'positionData'})
-      User.belongsTo (models.Allcode, {foreignKey: 'gender', targetKey: 'keyMap', as: 'genderData'})
+      User.belongsTo (models.Allcode, {foreignKey: 'gender', targetKey: 'keyMap', as: 'genderData'}),
+      // Mot user co 1 mo ta thong tin chi tiet ( key cua Markdown )
+      User.hasOne (models.Markdown, {foreignKey: 'doctorId' })
+
     }
   };
   User.init({ 
