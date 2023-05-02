@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       //  =====> TUONG TU GIOI TINH 
         Allcode.hasMany (models.User, { foreignKey: 'positionId', as: 'positionData'})
         Allcode.hasMany (models.User, {foreignKey: 'gender', as: 'genderData'})
-    }
+        Allcode.hasMany (models.Schedule, {foreignKey: 'timeType', as: 'timeTypeData'})
+   
+      }
   };
   Allcode.init({ 
     keyMap: DataTypes.STRING,

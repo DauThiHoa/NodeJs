@@ -12,13 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // 1 BAC SI CO THEM CO NHIEU PHONG KHAM
-
+      Schedule.belongsTo (models.Allcode, {foreignKey: 'timeType', targetKey: 'keyMap', as: 'timeTypeData'})
+      
     }
   };
   Schedule.init({ 
     currentNumber: DataTypes.INTEGER,
     maxNumber: DataTypes.INTEGER,
-    date: DataTypes.DATE,
+    date: DataTypes.STRING,
     timeType: DataTypes.STRING,
     doctorId: DataTypes.INTEGER, 
   }, {

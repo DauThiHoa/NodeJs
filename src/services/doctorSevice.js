@@ -2,7 +2,6 @@
 import db from "../models/index";
 require('dotenv').config();
 import _ from 'lodash';
-
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
 let getTopDoctorHome = ( limitInput ) => {
@@ -206,17 +205,18 @@ let bulkCreateSchedule = (data) => {
                     raw: true
                 }
             );
-// CONVERT DATE
+            // CONVERT DATE
 
-            if ( existing && existing.length > 0){
-                existing = existing.map (item => {
-                    item.date = new Date (item.date).getTime ();
-                    return item;
-                })
-            }
+            // if ( existing && existing.length > 0){
+            //     existing = existing.map (item => {
+            //         item.date = new Date (item.date).getTime ();
+            //         return item;
+            //     })
+            // }
+
             // COMPARE DIFFERENT
             let toCreate = _.differenceWith (schedule, existing, (a,b) => {
-                return a.timeType === b.timeType && a.date === b.date;
+                return a.timeType === b.timeType && +a.date === +b.date;
             }); 
             // HAN CHE TRUNG DU LIEU ( )
 
@@ -237,10 +237,53 @@ let bulkCreateSchedule = (data) => {
 })
 }
 
+let getScheduleByDate = (doctorId, date) => {
+ //  DUNG PROMISE => 100% SE TRA VE DU LIEU
+ return new Promise (async (resolve, reject) => {
+    try {
+        
+        if ( !doctorId || !date) {
+            resolve ({
+                errCode: 1,
+                errMessage: 'Missing required param !'
+            })
+        }else {
+            let dataSchedule = await db.Schedule.findAll ({
+                where: {
+                    doctorId: doctorId,
+                    date: date
+                } ,
+                include: [ 
+                // LAY THEM CHUC DANH CUA USER
+                {model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVn']},
+               
+                ],
+                //  raw: true,
+                raw: false,
+                nest: true
+            })
+ 
+            if (!dataSchedule) dataSchedule = [];
+
+             // resolve == return
+        resolve ({
+            errCode: 0,
+            data: dataSchedule 
+        })
+        }
+        
+
+    } catch (e) {
+        reject(e)
+    }
+})
+}
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors : getAllDoctors,
     saveDetailInforDoctor : saveDetailInforDoctor,
     getDetailDoctorById: getDetailDoctorById,
-    bulkCreateSchedule: bulkCreateSchedule
+    bulkCreateSchedule: bulkCreateSchedule,
+    getScheduleByDate: getScheduleByDate,
 }
