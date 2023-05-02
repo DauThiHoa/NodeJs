@@ -42,7 +42,8 @@ let initWebRoutes = (app) => {
     router.post('/api/save-infor-doctors',doctorController.postInforDoctor);
     // LAY THONG TIN BAC SI THEO MA ID 
     router.get('/api/get-detail-doctor-by-id',doctorController.getDetailDoctorById);
- 
+     // Luu thong tin dat lich kham
+    router.post('/api/bulk-create-schedule',doctorController.bulkCreateSchedule);
 
 router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
