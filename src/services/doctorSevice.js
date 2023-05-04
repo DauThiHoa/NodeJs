@@ -192,8 +192,22 @@ let getDetailDoctorById = (inputId) => {
                         attributes: ['description', 'contentHTML', 'contentMarkdown']
                     } ,
                     // LAY THEM CHUC DANH CUA USER
-                    {model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVn']},
-                   
+                         {model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVn']
+                        } ,
+                    {model: 
+                        db.Doctor_Infor ,
+                        // LAY CAC COT CAN THIET TRONG BANG Markdown
+                        attributes: {
+                            exclude: ['id', 'doctorId']
+                        },
+                         
+                        include : [
+                            {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVn']},
+                            {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVn']},
+                            {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVn']}
+                        ]
+                    }
+ 
                     ],
                     //  raw: true,
                     raw: false,
@@ -206,7 +220,9 @@ let getDetailDoctorById = (inputId) => {
                 }
 
                 // => CO BI SAI CUNG TRA VE GIA TRI BI NULL => khong hien loi do => Van hien form
-                if ( !data ) data = {};
+                if ( !data ) 
+                    data = {};
+
             // => Neu luu thanh cong se gui ve thong bao
                 resolve ({
                     errCode: 0,
@@ -301,6 +317,7 @@ let getScheduleByDate = (doctorId, date) => {
                 include: [ 
                 // LAY THEM CHUC DANH CUA USER
                 {model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVn']},
+                {model: db.User, as: 'doctorData', attributes: ['firstName', 'lastName']},
                
                 ],
                 //  raw: true,
@@ -324,6 +341,124 @@ let getScheduleByDate = (doctorId, date) => {
 })
 }
 
+
+//  getExtraInforDoctorById 
+let getExtraInforDoctorById = (idInput) => {
+    //  DUNG PROMISE => 100% SE TRA VE DU LIEU
+    return new Promise (async (resolve, reject) => {
+       try {
+           
+           if ( !idInput ) {
+               resolve ({
+                   errCode: 1,
+                   errMessage: 'Missing required param !'
+               })
+           }else {
+               let data = await db.Doctor_Infor.findOne ({
+                   where: {
+                       doctorId: idInput 
+                   } ,
+                   attributes: {
+                         exclude: ['id', 'doctorId']
+                     },
+                 
+                include : [
+                    {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVn']},
+                    {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVn']},
+                    {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVn']}
+                ],
+                raw: false,
+                nest: true
+
+               })
+      
+               if ( !data ) data = {};
+                // resolve == return
+           resolve ({
+               errCode: 0,
+               data: data
+           })
+           }
+           
+   
+       } catch (e) {
+           reject(e)
+       }
+   })
+   }
+
+//    getProfileDoctorById
+let getProfileDoctorById = (doctorId) => {
+    //  DUNG PROMISE => 100% SE TRA VE DU LIEU
+    return new Promise (async (resolve, reject) => {
+       try {
+           
+           if ( !doctorId ) {
+               resolve ({
+                   errCode: 1,
+                   errMessage: 'Missing required param !'
+               })
+           }else {
+                 // LAY 1 User ( fillOne) ( Voi ma ID)
+                 let data = await db.User.findOne ({
+                    // Dieu kien id dien vao bang id trong database
+                    where : {
+                        id : doctorId
+                    },
+                    // Bo 1 truong password 
+                    attributes: {
+                        exclude: ['password']
+                    },
+                    include: [ 
+                        {model: db.Markdown ,
+                            // LAY CAC COT CAN THIET TRONG BANG Markdown
+                            attributes: ['description', 'contentHTML', 'contentMarkdown']
+                        } ,
+                    // LAY THEM CHUC DANH CUA USER
+                         {model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVn']
+                        } ,
+                    {model: 
+                        db.Doctor_Infor ,
+                        // LAY CAC COT CAN THIET TRONG BANG Markdown
+                        attributes: {
+                            exclude: ['id', 'doctorId']
+                        },
+                         
+                        include : [
+                            {model: db.Allcode, as: 'priceTypeData', attributes: ['valueEn', 'valueVn']},
+                            {model: db.Allcode, as: 'provinceTypeData', attributes: ['valueEn', 'valueVn']},
+                            {model: db.Allcode, as: 'paymentTypeData', attributes: ['valueEn', 'valueVn']}
+                        ]
+                    }
+ 
+                    ],
+                    //  raw: true,
+                    raw: false,
+                    nest: true
+                })
+
+                // TAO ANH HIEN THI ( DO O DATABASE => LA HINH ANH BLOG )
+                if ( data && data.image) {
+                    data.image = new Buffer ( data.image, 'base64').toString('binary'); 
+                }
+
+                // => CO BI SAI CUNG TRA VE GIA TRI BI NULL => khong hien loi do => Van hien form
+                if ( !data ) 
+                    data = {};
+
+                // resolve == return
+           resolve ({
+               errCode: 0,
+               data: data
+           })
+           }
+           
+   
+       } catch (e) {
+           reject(e)
+       }
+   })
+   }
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors : getAllDoctors,
@@ -331,4 +466,6 @@ module.exports = {
     getDetailDoctorById: getDetailDoctorById,
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleByDate: getScheduleByDate,
+    getExtraInforDoctorById: getExtraInforDoctorById,
+    getProfileDoctorById : getProfileDoctorById,
 }

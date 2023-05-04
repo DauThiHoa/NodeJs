@@ -3,6 +3,9 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
+import patientController from "../controllers/patientController";
+import spcialtyController from "../controllers/spcialtyController";
+
 
 let router = express.Router();
 
@@ -46,8 +49,23 @@ let initWebRoutes = (app) => {
     router.post('/api/bulk-create-schedule',doctorController.bulkCreateSchedule);
     // LAY THONG TIN BAC SI THEO MA ID 
     router.get('/api/get-schedule-doctor-by-date',doctorController.getScheduleByDate);
+    // LAY THEM THONG TIN BAC SI THEO MA ID 
+    router.get('/api/get-extra-infor-doctor-by-id',doctorController.getExtraInforDoctorById);
+    // LAY THEM THONG TIN BAC SI THEO MA ID 
+    router.get('/api/get-profile-doctor-by-id',doctorController.getProfileDoctorById);
 
-router.get('/hoidanit', (req, res) => {
+
+      // patientController
+      // Luu thong tin benh nhan dat lich kham
+      router.post('/api/patient-book-appointment',patientController.postBookAppointment);
+      // Xac nhan khi dat lich kham thanh cong
+      router.post('/api/verify-book-appointment',patientController.postVerifyBookAppointment);
+   
+      // Luu thong tin Chuyen khoa
+   router.post('/api/create-new-specialty',spcialtyController.createSpecialty);
+   router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
+   
+      router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
 })
 
