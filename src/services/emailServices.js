@@ -17,7 +17,7 @@ let sendSimpleEmail = async ( dataSend ) => {
     
       // send mail with defined transport object
       let info = await transporter.sendMail({
-        from: '"Fred Foo 👻" <19130075@st.hcmuaf.edu>', // sender address
+        from: '"ScheduleMedicalExamination', // sender address
         to: dataSend.reciverEmail , // list of receivers
         subject: "Thông tin đặt lịch khám bệnh", // Subject line
         text: "Hello world?", // plain text body
