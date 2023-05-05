@@ -64,7 +64,9 @@ let initWebRoutes = (app) => {
       // Luu thong tin Chuyen khoa
    router.post('/api/create-new-specialty',spcialtyController.createSpecialty);
    router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
-   
+  //  Lay thong tin chi tiet chuyen khoa
+  router.get('/api/get-detail-specialty-by-id',spcialtyController.getDetailSpecialtyById);
+
       router.get('/hoidanit', (req, res) => {
     return res.send('HELLO WORD hoidanit ');
 })
