@@ -5,7 +5,7 @@ import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
 import patientController from "../controllers/patientController";
 import spcialtyController from "../controllers/spcialtyController";
-
+import clinicController from "../controllers/clinicController";
 
 let router = express.Router();
 
@@ -54,6 +54,8 @@ let initWebRoutes = (app) => {
     // LAY THEM THONG TIN BAC SI THEO MA ID 
     router.get('/api/get-profile-doctor-by-id',doctorController.getProfileDoctorById);
 
+    router.get('/api/get-list-patient-for-doctor',doctorController.getListPatientForDoctor);
+
 
       // patientController
       // Luu thong tin benh nhan dat lich kham
@@ -67,8 +69,15 @@ let initWebRoutes = (app) => {
   //  Lay thong tin chi tiet chuyen khoa
   router.get('/api/get-detail-specialty-by-id',spcialtyController.getDetailSpecialtyById);
 
-      router.get('/hoidanit', (req, res) => {
-    return res.send('HELLO WORD hoidanit ');
+
+    // Luu thong tin Chuyen khoa
+    router.post('/api/create-new-clinic',clinicController.createClinic);
+    router.get('/api/get-all-clinic', clinicController.getAllClinic);
+    //    //  Lay thong tin chi tiet chuyen khoa
+    router.get('/api/get-detail-clinic-by-id', clinicController.getDetailClinicById);
+
+      router.get('/hello', (req, res) => {
+    return res.send('HELLO WORD  ');
 })
 
     return app.use ("/", router);
