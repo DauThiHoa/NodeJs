@@ -56,6 +56,9 @@ let initWebRoutes = (app) => {
 
     router.get('/api/get-list-patient-for-doctor',doctorController.getListPatientForDoctor);
 
+    // Gui hoa don
+    router.post('/api/send-remedy',doctorController.sendRemedy);
+
 
       // patientController
       // Luu thong tin benh nhan dat lich kham
@@ -63,11 +66,12 @@ let initWebRoutes = (app) => {
       // Xac nhan khi dat lich kham thanh cong
       router.post('/api/verify-book-appointment',patientController.postVerifyBookAppointment);
    
+      
       // Luu thong tin Chuyen khoa
-   router.post('/api/create-new-specialty',spcialtyController.createSpecialty);
-   router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
-  //  Lay thong tin chi tiet chuyen khoa
-  router.get('/api/get-detail-specialty-by-id',spcialtyController.getDetailSpecialtyById);
+       router.post('/api/create-new-specialty',spcialtyController.createSpecialty);
+      router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
+     //  Lay thong tin chi tiet chuyen khoa
+      router.get('/api/get-detail-specialty-by-id',spcialtyController.getDetailSpecialtyById);
 
 
     // Luu thong tin Chuyen khoa
@@ -77,7 +81,7 @@ let initWebRoutes = (app) => {
     router.get('/api/get-detail-clinic-by-id', clinicController.getDetailClinicById);
 
       router.get('/hello', (req, res) => {
-    return res.send('HELLO WORD  ');
+       return res.send('HELLO WORD  ');
 })
 
     return app.use ("/", router);

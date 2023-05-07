@@ -2,6 +2,8 @@
 import db from "../models/index";
 require('dotenv').config();
 import _ from 'lodash';
+import emailServices from '../services/emailServices';
+
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
 let getTopDoctorHome = ( limitInput ) => {
@@ -510,6 +512,11 @@ let getListPatientForDoctor = (doctorId, date) => {
                                 {model: db.Allcode, as: 'genderData', attributes: ['valueEn', 'valueVn']} 
                             ],
                         } ,
+
+                        {
+                            model: db.Allcode, as: 'timeTypeDataPatient', attributes: ['valueEn', 'valueVn']
+                            
+                        }
                     ],
                     //  raw: true,
                     raw: false,
@@ -531,6 +538,53 @@ let getListPatientForDoctor = (doctorId, date) => {
    })
    }
 
+
+   
+//    sendRemedy
+let sendRemedy = (data) => {
+    //  DUNG PROMISE => 100% SE TRA VE DU LIEU
+    return new Promise (async (resolve, reject) => {
+       try {
+           
+           if ( !data.email  || !data.doctorId 
+            || !data.patientId || !data.timeType) {
+               resolve ({
+                   errCode: 1,
+                   errMessage: 'Missing required param !'
+               })
+           }else {
+                // Update patient status
+                let appointment = await db.Booking.findOne ({
+                    where : {
+                        doctorId : data.doctorId,
+                        patientId: data.patientId,
+                        timeType: data.timeType,
+                        statusId: 'S2'
+                    },
+                    raw: false
+                })
+                if ( appointment) {
+                    appointment.statusId = 'S3';
+                    await appointment.save ()
+                }
+                //  Send Remedy
+            await emailServices.sendAttachment ( data );
+
+                // resolve == return
+           resolve ({
+               errCode: 0,
+               errMessage: 'OK',
+               data: data
+           })
+           }
+           
+   
+       } catch (e) {
+           reject(e)
+       }
+   })
+   }
+
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors : getAllDoctors,
@@ -541,4 +595,5 @@ module.exports = {
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById : getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
+    sendRemedy: sendRemedy
 }
