@@ -145,6 +145,22 @@ let getListPatientForDoctor =   async ( req, res) => {
     }
 }
 
+// postDeletePatientForDoctor
+let postDeletePatientForDoctor =   async ( req, res) => {
+    try { 
+        let infor = await doctorSevice.postDeletePatientForDoctor(req.query.doctorId, req.query.patientId, req.query.date);
+        return res.status (200).json (
+            infor
+        )
+
+    } catch (e) {
+        console.log (e)
+        return res.status(200).json ({
+            errCode: -1,
+            errMessage: 'Error from the server'
+        })
+    }
+}
 
 // sendRemedy
 let sendRemedy =   async ( req, res) => {
@@ -173,5 +189,6 @@ module.exports = {
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById: getProfileDoctorById,
     getListPatientForDoctor:getListPatientForDoctor,
+    postDeletePatientForDoctor:postDeletePatientForDoctor,
     sendRemedy: sendRemedy,
 }

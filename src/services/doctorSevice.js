@@ -538,6 +538,47 @@ let getListPatientForDoctor = (doctorId, date) => {
    })
    }
 
+   
+// Delete Booking
+   let postDeletePatientForDoctor = (doctorId,patientId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date || !patientId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing required param!'
+                });
+            } else {
+                // Get the appointment to be deleted
+                let appointmentToDelete = await db.Booking.findOne({
+                    where: {
+                        doctorId: doctorId,
+                        patientId:patientId,
+                        date: date
+                    },
+                    raw: false
+                });
+
+                if (appointmentToDelete) {
+                    await appointmentToDelete.destroy(); // Delete the appointment
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Delete appointment succeed!'
+                    });
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'No appointment found for the given doctor and date'
+                    });
+                }
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 
    
 //    sendRemedy
@@ -595,5 +636,6 @@ module.exports = {
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById : getProfileDoctorById,
     getListPatientForDoctor: getListPatientForDoctor,
+    postDeletePatientForDoctor:postDeletePatientForDoctor,
     sendRemedy: sendRemedy
 }

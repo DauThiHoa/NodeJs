@@ -43,6 +43,7 @@ let initWebRoutes = (app) => {
     router.get('/api/get-all-doctors',doctorController.getAllDoctors);
     // LUU THONG TIN BAC SI TU FROM SELECT 
     router.post('/api/save-infor-doctors',doctorController.postInforDoctor);
+
     // LAY THONG TIN BAC SI THEO MA ID 
     router.get('/api/get-detail-doctor-by-id',doctorController.getDetailDoctorById);
      // Luu thong tin dat lich kham
@@ -55,7 +56,8 @@ let initWebRoutes = (app) => {
     router.get('/api/get-profile-doctor-by-id',doctorController.getProfileDoctorById);
 
     router.get('/api/get-list-patient-for-doctor',doctorController.getListPatientForDoctor);
-
+    // Xoa lich kham benh => bac si
+    router.post('/api/post-delete-patient-for-doctor',doctorController.postDeletePatientForDoctor);
     // Gui hoa don
     router.post('/api/send-remedy',doctorController.sendRemedy);
 
@@ -63,21 +65,24 @@ let initWebRoutes = (app) => {
       // patientController
       // Luu thong tin benh nhan dat lich kham
       router.post('/api/patient-book-appointment',patientController.postBookAppointment);
+      // // Xoa thong tin benh nhan dat lich kham
+      // router.post('/api/delete-patient-book-appointment',patientController.postBookAppointment);
       // Xac nhan khi dat lich kham thanh cong
       router.post('/api/verify-book-appointment',patientController.postVerifyBookAppointment);
    
       
       // Luu thong tin Chuyen khoa
        router.post('/api/create-new-specialty',spcialtyController.createSpecialty);
-      router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
+      
+       router.get('/api/get-all-specialty',spcialtyController.getAllSpecialty);
      //  Lay thong tin chi tiet chuyen khoa
       router.get('/api/get-detail-specialty-by-id',spcialtyController.getDetailSpecialtyById);
 
 
-    // Luu thong tin Chuyen khoa
+    // Luu thong tin Phong kham
     router.post('/api/create-new-clinic',clinicController.createClinic);
     router.get('/api/get-all-clinic', clinicController.getAllClinic);
-    //    //  Lay thong tin chi tiet chuyen khoa
+    //    //  Lay thong tin chi tiet phong kham
     router.get('/api/get-detail-clinic-by-id', clinicController.getDetailClinicById);
 
       router.get('/hello', (req, res) => {
